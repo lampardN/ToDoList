@@ -1,4 +1,4 @@
-from PyQt5 import QtWidgets
+from PyQt5 import QtWidgets, QtGui
 from top_line import top_line
 from item_line import Item
 from db_controller import dbController
@@ -61,7 +61,6 @@ class Main(QtWidgets.QScrollArea):
                 self.showTable()
                 break
 
-
     def updateText(self):
         for i in range(len(self.items)):
             if self.items[i].textCh:
@@ -71,14 +70,12 @@ class Main(QtWidgets.QScrollArea):
                 self.showTable()
                 break
 
-
     def updateTag(self):
         for i in range(len(self.items)):
-            if self.items[i].tagCh:
+            if self.items[i].tag != self.items[i].status.currentText():
                 self.db.updateTag(self.items[i].id,
                                   self.items[i].status.currentText())
-                self.items[i].updateTag()
-                print(self.items[i].tagCh)
+                self.items[i].tag = self.items[i].status.currentText()
                 self.showTable()
                 break
 
@@ -86,6 +83,9 @@ class Main(QtWidgets.QScrollArea):
 if __name__ == '__main__':
     from sys import *
     app = QtWidgets.QApplication(argv)
+    app.setWindowIcon(QtGui.QIcon('notebook.svg'))
     window = Main()
+    window.setWindowTitle('ToDoList')
+    window.setWindowIcon(QtGui.QIcon('notebook.svg'))
     window.show()
     exit(app.exec_())

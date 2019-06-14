@@ -5,8 +5,8 @@ class Item:
     def __init__(self):
         self.object = object
         self.id = None
-        self.tagCh = False
         self.textCh = False
+        self.tag = None
         self.box = QtWidgets.QHBoxLayout()
 
         self.line = QtWidgets.QTextEdit()
@@ -23,7 +23,6 @@ class Item:
 
         self.status = QtWidgets.QComboBox()
         self.status.addItems(('active', 'complete'))
-        self.status.currentIndexChanged.connect(self.updateTag)
 
         self.box.addWidget(self.line)
         self.box.addWidget(self.update_button)
@@ -42,16 +41,11 @@ class Item:
         self.object = None
 
     def setTag(self, tag):
+        self.tag = tag
         self.status.setCurrentText(tag)
 
     def setText(self, text):
         self.line.setText(text)
-
-    def updateTag(self):
-        if self.tagCh:
-            self.tagCh = False
-        else:
-            self.tagCh = True
 
     def updateText(self):
         if self.textCh:
